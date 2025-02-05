@@ -40,13 +40,11 @@ public class TaskManager {
 
     public  void deleteAllTasks() {
         this.tasks.clear();
-        System.out.println("Задачи удалены!");
     }
 
     public void deleteAllEpics() {
         this.epics.clear();
         this.subtasks.clear(); //если нет эпиков, то подзадачи удаляются
-        System.out.println("Эпики удалены");
     }
 
     public void deleteAllSubTasks() {
@@ -58,17 +56,14 @@ public class TaskManager {
             epic.status = TaskStatus.NEW;
             epic.getEpicSubTasks().clear(); //во всех эпиках очищаем хэшмап из подзадач
         }
-        System.out.println("Подзадачи удалены!");
     }
 
     /* Получение по идентификатору для всех типов задач */
     public Task getTaskById(int id) {
         if (tasks.isEmpty()) {
-            System.out.println("Задач в системе нет!");
             return null;
         }
         if (!(tasks.containsKey(id))) {
-            System.out.println("Задачи с таким ID нет");
             return null;
         }
         return tasks.get(id);
@@ -76,11 +71,9 @@ public class TaskManager {
 
     public Task getSubTaskById(int id) {
         if (subtasks.isEmpty()) {
-            System.out.println("Подзадач в системе нет!");
             return null;
         }
         if (!(subtasks.containsKey(id))) {
-            System.out.println("Подзадачи с таким ID нет");
             return null;
         }
         return subtasks.get(id);
@@ -88,11 +81,9 @@ public class TaskManager {
 
     public Task getEpicTaskById(int id) {
         if (epics.isEmpty()) {
-            System.out.println("Эпиков в системе нет!");
             return null;
         }
         if (!(epics.containsKey(id))) {
-            System.out.println("Эпика с таким ID нет");
             return null;
         }
         return epics.get(id);
@@ -125,7 +116,6 @@ public class TaskManager {
         }
         int epicId = newSubTask.getEpicId();
         if (!epics.containsKey(epicId)) {
-            System.out.println("У подзадачи некорректный эпик");
             return;
         }
         idCounter++;
@@ -140,7 +130,6 @@ public class TaskManager {
             return;
         }
         if (!(tasks.containsKey(task.getId()))) {
-            System.out.println("Такой задачи нет");
             return;
         }
         tasks.put(task.getId(), task);
@@ -151,7 +140,6 @@ public class TaskManager {
             return;
         }
         if (!(epics.containsKey(epic.getId()))) {
-            System.out.println("Такого эпика нет");
             return;
         }
         epics.get(epic.getId()).updateEpic(epic);
@@ -162,11 +150,10 @@ public class TaskManager {
             return;
         }
         if (!(subtasks.containsKey(subTask.getId()))) {
-            System.out.println("Такой подзадачи нет");
             return;
         }
         if (!epics.containsKey(subTask.getEpicId())) {
-            System.out.println("Эпика привязан некорректно(такого эпика нет)");
+            return;
         }
         if (subTask.getEpicId() != subtasks.get(subTask.getId()).getEpicId()) {
             //подзадача привязывается к другому эпику
@@ -179,7 +166,6 @@ public class TaskManager {
     /*Удаление по идентификатору. */
     public void deleteTask(int id) {
         if (!tasks.containsKey(id)) {
-            System.out.println("Подзадачи с таким ID нет");
             return;
         }
         tasks.remove(id);
@@ -187,7 +173,6 @@ public class TaskManager {
 
     public void deleteEpic(int id) {
         if (!epics.containsKey(id)) {
-            System.out.println("Эпика с таким ID нет");
             return;
         }
         HashMap<Integer,SubTask>  subTaskForEpic = epics.get(id).getEpicSubTasks();
@@ -199,7 +184,6 @@ public class TaskManager {
 
     public void deleteSubTask(int id) {
         if (!subtasks.containsKey(id)) {
-            System.out.println("Подзадачи с таким ID нет");
             return;
         }
         int epicId = subtasks.get(id).getEpicId();
@@ -210,7 +194,6 @@ public class TaskManager {
     /* Получение списка всех подзадач определённого эпика. */
     public HashMap<Integer, SubTask> getSubTasksByEpic(int epicId) {
         if (!epics.containsKey(epicId)) {
-            System.out.println("Такого эпика нет");
             return null;
         }
         return epics.get(epicId).getEpicSubTasks();
