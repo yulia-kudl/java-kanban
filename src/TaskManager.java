@@ -94,8 +94,7 @@ public class TaskManager {
         if ( newTask == null ) {
             return;
         }
-        idCounter++;
-        newTask.setId(idCounter);
+        generateAndSetId(newTask);
         tasks.put(newTask.getId(), newTask);
     }
 
@@ -103,8 +102,7 @@ public class TaskManager {
         if ( newEpic == null ) {
             return;
         }
-        idCounter++;
-        newEpic.setId(idCounter);
+        generateAndSetId(newEpic);
         newEpic.setEpicSubTasks(new HashMap<>()); //всегда добавляем эпик без подзадач
         newEpic.updateEpicStatus();
         epics.put(newEpic.getId(), newEpic);
@@ -118,8 +116,7 @@ public class TaskManager {
         if (!epics.containsKey(epicId)) {
             return;
         }
-        idCounter++;
-        newSubTask.setId(idCounter);
+        generateAndSetId(newSubTask);
         subtasks.put(newSubTask.getId(), newSubTask);
         epics.get(epicId).addSubTask(newSubTask);
     }
@@ -197,6 +194,11 @@ public class TaskManager {
             return null;
         }
         return epics.get(epicId).getEpicSubTasks().values().stream().toList();
+    }
+
+    private  void generateAndSetId(Task task){
+        idCounter++;
+        task.setId(idCounter);
     }
 }
 
