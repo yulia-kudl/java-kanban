@@ -96,7 +96,7 @@ public class TaskManager {
         }
         idCounter++;
         newTask.setId(idCounter);
-        tasks.put(idCounter, newTask);
+        tasks.put(newTask.getId(), newTask);
     }
 
     public void createEpic(Epic newEpic) {
@@ -107,7 +107,7 @@ public class TaskManager {
         newEpic.setId(idCounter);
         newEpic.setEpicSubTasks(new HashMap<>()); //всегда добавляем эпик без подзадач
         newEpic.updateEpicStatus();
-        epics.put(idCounter, newEpic);
+        epics.put(newEpic.getId(), newEpic);
     }
 
     public void createSubTask(SubTask newSubTask) {
@@ -120,7 +120,7 @@ public class TaskManager {
         }
         idCounter++;
         newSubTask.setId(idCounter);
-        subtasks.put(idCounter, newSubTask);
+        subtasks.put(newSubTask.getId(), newSubTask);
         epics.get(epicId).addSubTask(newSubTask);
     }
 
