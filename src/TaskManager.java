@@ -192,11 +192,11 @@ public class TaskManager {
     }
 
     /* Получение списка всех подзадач определённого эпика. */
-    public HashMap<Integer, SubTask> getSubTasksByEpic(int epicId) {
+    public List<SubTask> getSubTasksByEpic(int epicId) {
         if (!epics.containsKey(epicId)) {
             return null;
         }
-        return epics.get(epicId).getEpicSubTasks();
+        return epics.get(epicId).getEpicSubTasks().values().stream().toList();
     }
 }
 
