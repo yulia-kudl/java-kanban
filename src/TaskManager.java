@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 
 public class TaskManager {
     private int idCounter;
@@ -15,25 +16,25 @@ public class TaskManager {
 
     /*Методы для получения списка всех типов задач */
 
-    public HashMap<Integer, SubTask> getSubtasks() {
+    public List<SubTask> getSubtasks() {
         if (subtasks.isEmpty()){
-            System.out.println("Список подзадач пуст");
+            return null;
         }
-        return subtasks;
+        return subtasks.values().stream().toList();
     }
 
-    public HashMap<Integer, Epic> getEpics() {
+    public List<Epic> getEpics() {
         if (epics.isEmpty()){
-            System.out.println("Список эпиков пуст");
+            return null;
         }
-        return epics;
+        return epics.values().stream().toList();
     }
 
-    public HashMap<Integer, Task> getTasks() {
+    public List<Task> getTasks() {
         if (subtasks.isEmpty()){
-            System.out.println("Список задач пуст");
+            return null;
         }
-        return tasks;
+        return tasks.values().stream().toList();
     }
     /*Методы для удаления всех типов задач */
 
