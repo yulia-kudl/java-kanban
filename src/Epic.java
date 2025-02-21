@@ -1,5 +1,6 @@
 import java.util.HashMap;
 
+
 public class Epic extends Task {
     private HashMap<Integer,SubTask> epicSubTasks;
 
@@ -11,7 +12,6 @@ public class Epic extends Task {
 
     @Override
     public void setStatus(TaskStatus status) {
-        return;
     }
 
     public HashMap<Integer, SubTask> getEpicSubTasks() {
@@ -78,5 +78,13 @@ public class Epic extends Task {
 
     public void setEpicSubTasks(HashMap<Integer, SubTask> epicSubTasks) {
         this.epicSubTasks = epicSubTasks;
+    }
+
+    @Override
+    public Epic copyTask() {
+        Epic epicCopy = new Epic(this.name,this.status, this.description);
+        epicCopy.status = this.status;
+        epicCopy.epicSubTasks = new HashMap<>(this.epicSubTasks);
+        return epicCopy;
     }
 }
