@@ -18,7 +18,7 @@ class EpicTest {
         epic.setStatus(TaskStatus.IN_PROGRESS);
         assertEquals(epic.status, TaskStatus.NEW, "wrong status");
     }
-
+//Test  for epic status
     void testEpicStatus() {
         assertEquals(TaskStatus.NEW, epic.status, "incorrect first status");
         SubTask subt = new SubTask("subt", TaskStatus.IN_PROGRESS, "dec", 10);
