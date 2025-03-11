@@ -229,7 +229,7 @@ public class InMemoryTaskManager implements TaskManager {
         return this.historyManager.getHistory();
     }
 
-    private  void generateAndSetId(Task task){
+    private  void generateAndSetId(Task task) {
         idCounter++;
         task.setId(idCounter);
     }
