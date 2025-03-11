@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
         private final HashMap<Integer, Node> idMap;
         private final List<Node> taskHistoryList;
         public Node head;
@@ -14,10 +14,11 @@ public class InMemoryHistoryManager implements HistoryManager{
             idMap = new HashMap<>();
             taskHistoryList = new LinkedList<>();
         }
+
         @Override
         public void add(Task task) {
             Task taskCopy = task.copyTask();
-            if ( idMap.containsKey(task.getId())) {
+            if (idMap.containsKey(task.getId())) {
                 // delete old task history
                 remove(task.getId());
             }
@@ -29,7 +30,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         @Override
         public List<Task> getHistory() {
             List<Task> historyList = new ArrayList<>();
-            for (Node iterator = head; iterator!= null; iterator = iterator.next){
+            for (Node iterator = head; iterator != null; iterator = iterator.next) {
                 historyList.add(iterator.task);
             }
             return historyList;
@@ -37,7 +38,7 @@ public class InMemoryHistoryManager implements HistoryManager{
 
         @Override
         public  void remove(int id) {
-            if ( !idMap.containsKey(id)) {
+            if (!idMap.containsKey(id)) {
                 return;
             }
             Node nodeToDelete = idMap.get(id);
@@ -48,7 +49,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         private void removeNode(Node node) {
             // 1 node in list
 
-            if ( this.size == 1) {
+            if (this.size == 1) {
                 taskHistoryList.remove(node);
                 head = null;
                 tail = null;
@@ -56,14 +57,14 @@ public class InMemoryHistoryManager implements HistoryManager{
                 return;
             }
             // nodeToDelete is the first element
-            if ( head.equals(node) ) {
+            if (head.equals(node)) {
                 head = head.next;
                 head.prev = null;
                 size--;
                 return;
             }
             // nodeToDelete is the last element
-            if ( tail == node) {
+            if (tail == node) {
                 tail = node.prev;
                 tail.next = null;
                 size--;
@@ -75,7 +76,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         }
 
         private void linkLast(Node node) {
-            if ( size == 0) {
+            if (size == 0) {
                 taskHistoryList.add(node);
                 head = node;
                 tail = node;
