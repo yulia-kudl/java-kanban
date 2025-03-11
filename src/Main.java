@@ -3,7 +3,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        TaskManager taskManager= Managers.getDefault();
+        TaskManager taskManager = Managers.getDefault();
         Task task1 = new Task("Посмотреть фильм", TaskStatus.NEW, "фильм Гарри Поттер");
         Task task2 = new Task("Прочитать книгу", TaskStatus.NEW, "Алиса в стране чудес");
         Epic epic1 = new Epic("Купить продукты", TaskStatus.NEW, "продукты из Ашана на неделю");
@@ -43,9 +43,8 @@ public class Main {
 
         printAllTasks(taskManager);
 
-
-
     }
+
     private static void printAllTasks(TaskManager manager) {
         System.out.println("-------------------");
         /*   System.out.println("Задачи:");
