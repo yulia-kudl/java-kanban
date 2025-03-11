@@ -17,8 +17,8 @@ public class Main {
 
         SubTask subTask1 = new SubTask("Молоко", TaskStatus.NEW, "Простоквашино", epic1.getId());
         SubTask subTask2 = new SubTask("Хлеб", TaskStatus.NEW, "Зерновой", epic1.getId());
-        SubTask subTask3 = new SubTask("Приготовить тесто", TaskStatus.NEW, "с шоколадом и орехами",
-                epic2.getId());
+        SubTask subTask3 = new SubTask("Шоколад", TaskStatus.NEW, "с шоколадом и орехами",
+                epic1.getId());
 
         taskManager.createSubTask(subTask1);
         taskManager.createSubTask(subTask2);
@@ -31,17 +31,7 @@ public class Main {
         taskManager.getSubTaskById(subTask2.getId());
         taskManager.getSubTaskById(subTask1.getId());
         taskManager.getSubTaskById(subTask1.getId());
-        printAllTasks(taskManager);
 
-        task1.setStatus(TaskStatus.IN_PROGRESS);
-        task2.setStatus(TaskStatus.DONE);
-        subTask1.setStatus(TaskStatus.IN_PROGRESS);
-        subTask3.setStatus(TaskStatus.DONE);
-
-        taskManager.updateTask(task1);
-        taskManager.updateTask(task2);
-        taskManager.updateSubTask(subTask1);
-        taskManager.updateSubTask(subTask3);
 
         taskManager.getTaskById(task1.getId());
         taskManager.getTaskById(task1.getId());
@@ -53,32 +43,12 @@ public class Main {
 
         printAllTasks(taskManager);
 
-        Task task3 = new Task("Погладить кота", TaskStatus.NEW, "Мурзик скучает");
-        Task task4 = new Task("Покормить кота", TaskStatus.NEW, "Мурзик проголодался");
-        Epic epic3 = new Epic("Запланировать путешествие", TaskStatus.NEW, "Тайланд на месяц");
-
-
-        taskManager.createTask(task3);
-        taskManager.createTask(task4);
-        taskManager.createEpic(epic3);
-
-        SubTask subTask4 = new SubTask("Купить билеты", TaskStatus.NEW, "Аэрофлот", epic3.getId());
-
-        taskManager.createSubTask(subTask4);
-
-        taskManager.getTaskById(task3.getId());
-        taskManager.getTaskById(task4.getId());
-        taskManager.getSubTaskById(subTask4.getId());
-        taskManager.getEpicTaskById(epic3.getId());
-
-
-        printAllTasks(taskManager);
 
 
     }
     private static void printAllTasks(TaskManager manager) {
         System.out.println("-------------------");
-        System.out.println("Задачи:");
+        /*   System.out.println("Задачи:");
         for (Task task : manager.getTasks()) {
             System.out.println(task);
         }
@@ -94,7 +64,7 @@ public class Main {
         for (Task subtask : manager.getSubtasks()) {
             System.out.println(subtask);
         }
-
+*/
         System.out.println("История:");
         for (Task task : manager.getHistoryForTaskManager()) {
             System.out.println(task);

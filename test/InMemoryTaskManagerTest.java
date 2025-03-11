@@ -17,7 +17,6 @@ class InMemoryTaskManagerTest {
         task1 = new Task("task1", TaskStatus.NEW, "desc1");
         epic0 = new Epic("epic0", TaskStatus.NEW, "desc0 epic");
         epic1 = new Epic("epic1", TaskStatus.NEW, "desc1 epic");
-        //SubTask subTask = new SubTask("subT0", TaskStatus.NEW,"desc0, epic");
     }
 
     @Test
@@ -151,8 +150,9 @@ class InMemoryTaskManagerTest {
         SubTask subt = new SubTask("subt", TaskStatus.NEW, "desc", epic0.getId());
         taskMan.createSubTask(subt);
         assertEquals(subt, taskMan.getSubTasksByEpic(epic0.getId()).getFirst(), "added subtask for epic wasnt found");
+        assertEquals(1, taskMan.getHistoryForTaskManager().size(), "history size is ok");
         taskMan.deleteEpic(epic0.getId());
-        assertNull(taskMan.getEpicTaskById(epic0.getId()), "deleted task was found");
+       assertNull(taskMan.getEpicTaskById(epic0.getId()), "deleted task was found");
         assertNull(taskMan.getSubTaskById(subt.getId()), "subtask of deleted task was found");
 
     }
@@ -185,7 +185,7 @@ class InMemoryTaskManagerTest {
         taskMan.getEpicTaskById(epic1.getId());
         taskMan.getEpicTaskById(epic1.getId());
         taskMan.getEpicTaskById(epic1.getId());
-        assertEquals(7, taskMan.getHistoryForTaskManager().size(), "incorrect history size");
-        assertEquals(task1.getId(), taskMan.getHistoryForTaskManager().get(2).getId(), "incorrect value in history");
+        assertEquals(4, taskMan.getHistoryForTaskManager().size(), "incorrect history size");
+        assertEquals(epic0.getId(), taskMan.getHistoryForTaskManager().get(2).getId(), "incorrect value in history");
     }
 }

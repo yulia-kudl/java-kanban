@@ -76,7 +76,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (!(tasks.containsKey(id))) {
             return null;
         }
-        //addTaskToHistory(tasks.get(id));
         historyManager.add(tasks.get(id));
         return tasks.get(id);
     }
@@ -89,7 +88,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (!(subtasks.containsKey(id))) {
             return null;
         }
-        //addTaskToHistory(subtasks.get(id));
         historyManager.add(subtasks.get(id));
         return subtasks.get(id);
     }
@@ -102,7 +100,6 @@ public class InMemoryTaskManager implements TaskManager {
         if (!(epics.containsKey(id))) {
             return null;
         }
-        //addTaskToHistory(epics.get(id));
         historyManager.add(epics.get(id));
         return epics.get(id);
     }
@@ -190,6 +187,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (!tasks.containsKey(id)) {
             return;
         }
+        historyManager.remove(id);
         tasks.remove(id);
     }
 
@@ -201,7 +199,9 @@ public class InMemoryTaskManager implements TaskManager {
         HashMap<Integer,SubTask>  subTaskForEpic = epics.get(id).getEpicSubTasks();
         for (int key : subTaskForEpic.keySet()) { //удаляем подзадачи эпика
             subtasks.remove(key);
+            historyManager.remove(key);
         }
+        historyManager.remove(id);
         epics.remove(id);
     }
 
@@ -213,6 +213,7 @@ public class InMemoryTaskManager implements TaskManager {
         int epicId = subtasks.get(id).getEpicId();
         epics.get(epicId).deleteSubTask(subtasks.get(id));
         subtasks.remove(id);
+        historyManager.remove(id);
     }
 
     /* Получение списка всех подзадач определённого эпика. */

@@ -85,6 +85,7 @@ public class Epic extends Task {
         Epic epicCopy = new Epic(this.name,this.status, this.description);
         epicCopy.status = this.status;
         epicCopy.epicSubTasks = new HashMap<>(this.epicSubTasks);
+        epicCopy.id = this.id;
         return epicCopy;
     }
 }
