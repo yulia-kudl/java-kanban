@@ -106,7 +106,7 @@ public class InMemoryTaskManager implements TaskManager {
     /* Создание. Сам объект должен передаваться в качестве параметра */
     @Override
     public void createTask(Task newTask) {
-        if ( newTask == null ) {
+        if (newTask == null) {
             return;
         }
         generateAndSetId(newTask);
@@ -115,7 +115,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createEpic(Epic newEpic) {
-        if ( newEpic == null ) {
+        if (newEpic == null) {
             return;
         }
         generateAndSetId(newEpic);
@@ -141,7 +141,7 @@ public class InMemoryTaskManager implements TaskManager {
     /* Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра. */
     @Override
     public void updateTask(Task task) {
-        if ( task == null) {
+        if (task == null) {
             return;
         }
         if (!(tasks.containsKey(task.getId()))) {
@@ -152,7 +152,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpic(Epic epic) {
-        if ( epic == null) {
+        if (epic == null) {
             return;
         }
         if (!(epics.containsKey(epic.getId()))) {
@@ -163,7 +163,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateSubTask(SubTask subTask) {
-        if ( subTask == null) {
+        if (subTask == null) {
             return;
         }
         if (!(subtasks.containsKey(subTask.getId()))) {
