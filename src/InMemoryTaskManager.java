@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<SubTask> getSubtasks() {
-        if (subtasks.isEmpty()){
+        if (subtasks.isEmpty()) {
             return null;
         }
         return subtasks.values().stream().toList();
@@ -29,7 +28,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Epic> getEpics() {
-        if (epics.isEmpty()){
+        if (epics.isEmpty()) {
             return null;
         }
         return epics.values().stream().toList();
@@ -37,7 +36,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getTasks() {
-        if (tasks.isEmpty()){
+        if (tasks.isEmpty()) {
             return null;
         }
         return tasks.values().stream().toList();
