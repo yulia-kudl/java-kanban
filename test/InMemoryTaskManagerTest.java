@@ -57,8 +57,12 @@ class InMemoryTaskManagerTest {
     void deleteAllTasks() {
         taskMan.createTask(task0);
         taskMan.createTask(task1);
+        taskMan.getTaskById(task0.getId());
+        taskMan.getTaskById(task1.getId());
         assertEquals(2, taskMan.getTasks().size(), "incorrect size");
+        assertEquals(2, taskMan.historyManager.getHistory().size(), "incorrect size");
         taskMan.deleteAllTasks();
+        assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
         assertNull(taskMan.getTaskById(task0.getId()), "deleted Task was found");
         assertNull(taskMan.getTasks(), "Tasks are not empty");
 
@@ -73,7 +77,12 @@ class InMemoryTaskManagerTest {
         taskMan.createSubTask(subt);
         assertEquals(subt, taskMan.getSubTasksByEpic(epic0.getId()).getFirst(), "subTask wasnt added to Epic");
         assertEquals(1, taskMan.getSubtasks().size(), "incorrect subtask size");
+        taskMan.getEpicTaskById(epic0.getId());
+        taskMan.getEpicTaskById(epic1.getId());
+        taskMan.getSubTaskById(subt.getId());
+        assertEquals(3, taskMan.historyManager.getHistory().size(), "history wrong size");
         taskMan.deleteAllEpics();
+        assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
         assertNull(taskMan.getEpicTaskById(epic0.getId()), "deleted epic  was found");
         assertNull(taskMan.getEpics(), "Epics are not empty");
         assertNull(taskMan.getSubtasks(), "Subtasks are not empty");
@@ -89,7 +98,13 @@ class InMemoryTaskManagerTest {
         taskMan.createSubTask(subt1);
         assertEquals(2, taskMan.getSubtasks().size(), "incorrect subtask size");
         assertEquals(TaskStatus.IN_PROGRESS, epic0.status, "epic status wasn't updated");
+        taskMan.getSubTaskById(subt0.getId());
+        taskMan.getSubTaskById(subt1.getId());
+        assertEquals(2, taskMan.historyManager.getHistory().size(), "history wrong size");
+
         taskMan.deleteAllSubTasks();
+        assertEquals(0, taskMan.historyManager.getHistory().size(), "history wrong size");
+
         assertNull(taskMan.getSubTaskById(subt1.getId()), "deleted subtask  was found");
         assertNull(taskMan.getSubtasks(), "Subtasks are not empty");
     }

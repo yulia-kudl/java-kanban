@@ -17,8 +17,7 @@ public class Main {
 
         SubTask subTask1 = new SubTask("Молоко", TaskStatus.NEW, "Простоквашино", epic1.getId());
         SubTask subTask2 = new SubTask("Хлеб", TaskStatus.NEW, "Зерновой", epic1.getId());
-        SubTask subTask3 = new SubTask("Шоколад", TaskStatus.NEW, "с шоколадом и орехами",
-                epic1.getId());
+        SubTask subTask3 = new SubTask("Шоколад", TaskStatus.NEW, "с шоколадом и орехами", epic1.getId());
 
         taskManager.createSubTask(subTask1);
         taskManager.createSubTask(subTask2);

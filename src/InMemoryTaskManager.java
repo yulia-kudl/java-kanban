@@ -45,17 +45,29 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllTasks() {
+        for (int id : tasks.keySet()) {    //удаляем все таски из истории сначала
+            historyManager.remove(id);
+        }
         this.tasks.clear();
     }
 
     @Override
     public void deleteAllEpics() {
+        for (int id : epics.keySet()) {  // удаляем все эпики и подзадачи из истории
+            historyManager.remove(id);
+        }
+        for (int id : subtasks.keySet()) {
+            historyManager.remove(id);
+        }
         this.epics.clear();
         this.subtasks.clear(); //если нет эпиков, то подзадачи удаляются
     }
 
     @Override
     public void deleteAllSubTasks() {
+        for (int id : subtasks.keySet()) { //удаляем все сабтаски из истории
+            historyManager.remove(id);
+        }
         this.subtasks.clear();
         if (this.epics.isEmpty()) {
             return;
