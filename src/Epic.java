@@ -20,7 +20,7 @@ public class Epic extends Task {
 
     public void updateEpicStatus() {
         if (epicSubTasks.isEmpty()) {
-            this.status =TaskStatus.NEW;
+            this.status = TaskStatus.NEW;
             return;
         }
         boolean newTask = false;
@@ -71,7 +71,7 @@ public class Epic extends Task {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
-                ", status=" + status + '\''+
+                ", status=" + status + '\'' +
                 "epicSubTasks=" + epicSubTasks +
                 '}';
     }
@@ -85,6 +85,7 @@ public class Epic extends Task {
         Epic epicCopy = new Epic(this.name,this.status, this.description);
         epicCopy.status = this.status;
         epicCopy.epicSubTasks = new HashMap<>(this.epicSubTasks);
+        epicCopy.id = this.id;
         return epicCopy;
     }
 }
