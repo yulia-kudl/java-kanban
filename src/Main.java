@@ -1,8 +1,7 @@
-import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         //  Path file = Files.createFile(Paths.get("C:\\Users\\Юлия\\IdeaProjects\\java-kanban\\out\\test\\lala"));
         // TaskManager taskManager= Managers.getLocal(file.toString());
@@ -23,8 +22,7 @@ public class Main {
 
         SubTask subTask1 = new SubTask("Молоко", TaskStatus.NEW, "Простоквашино", epic1.getId());
         SubTask subTask2 = new SubTask("Хлеб", TaskStatus.NEW, "Зерновой", epic1.getId());
-        SubTask subTask3 = new SubTask("Приготовить тесто", TaskStatus.NEW, "с шоколадом и орехами",
-                epic2.getId());
+        SubTask subTask3 = new SubTask("Шоколад", TaskStatus.NEW, "с шоколадом и орехами", epic1.getId());
 
         taskManager.createSubTask(subTask1);
         taskManager.createSubTask(subTask2);
@@ -37,8 +35,10 @@ public class Main {
         taskManager.getSubTaskById(subTask2.getId());
         taskManager.getSubTaskById(subTask1.getId());
         taskManager.getSubTaskById(subTask1.getId());
-        printAllTasks(taskManager);
 
+        taskManager.deleteAllEpics();
+        printAllTasks(taskManager);
+/*
         task1.setStatus(TaskStatus.IN_PROGRESS);
         task2.setStatus(TaskStatus.DONE);
         subTask1.setStatus(TaskStatus.IN_PROGRESS);
@@ -79,12 +79,12 @@ public class Main {
 
 
         // printAllTasks(taskManager);
-        Task taskForTest = new Task("task11", TaskStatus.DONE, "for test");
+        Task TaskForTest = new Task("task_for_test", TaskStatus.DONE, "for test");
 
-        taskManager.createTask(taskForTest);
+        taskManager.createTask(TaskForTest);
         printAllTasks(taskManager);
 
-
+*/
     }
 
     private static void printAllTasks(TaskManager manager) {
@@ -108,7 +108,7 @@ public class Main {
 
         System.out.println("История:");
         for (Task task : manager.getHistoryForTaskManager()) {
-            //   System.out.println(task);
+               System.out.println(task);
         }
     }
 }

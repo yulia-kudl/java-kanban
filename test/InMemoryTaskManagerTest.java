@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ class InMemoryTaskManagerTest {
     @Test
     void checkAddandGetSubTasks() {
 
-        assertNull(taskMan.getSubtasks(), "getSubtasks is not empty");
+        assertTrue(taskMan.getSubtasks().isEmpty(), "getSubtasks is not empty");
         taskMan.createEpic(epic0);
         SubTask subt =new SubTask("subT0", TaskStatus.NEW, "desc0 subT", epic0.getId());
         taskMan.createSubTask(subt);
@@ -35,7 +34,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void heckAddandGetEpics() {
-        assertNull(taskMan.getEpics(), "Epics is not empty");
+        assertTrue(taskMan.getEpics().isEmpty(), "Epics is not empty");
         taskMan.createEpic(epic0);
         assertEquals(1, taskMan.getEpics().size(), "incorrect size");
         assertEquals("desc0 epic", taskMan.getEpics().getFirst().getDescription(), "incorrectDescription");
@@ -45,7 +44,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void checkAddAndGetTasks() {
-        assertNull(taskMan.getTasks(), "Tasks is not empty");
+        assertTrue(taskMan.getTasks().isEmpty(), "Tasks is not empty");
         taskMan.createTask(task0);
         assertEquals(1, taskMan.getTasks().size(), "incorrect size");
         assertEquals("desc0", taskMan.getTasks().getFirst().getDescription(), "incorrectDescription");
@@ -64,7 +63,7 @@ class InMemoryTaskManagerTest {
         taskMan.deleteAllTasks();
         assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
         assertNull(taskMan.getTaskById(task0.getId()), "deleted Task was found");
-        assertNull(taskMan.getTasks(), "Tasks are not empty");
+        assertTrue(taskMan.getTasks().isEmpty(), "Tasks are not empty");
 
     }
 
@@ -82,10 +81,10 @@ class InMemoryTaskManagerTest {
         taskMan.getSubTaskById(subt.getId());
         assertEquals(3, taskMan.historyManager.getHistory().size(), "history wrong size");
         taskMan.deleteAllEpics();
-        assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
+                assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
         assertNull(taskMan.getEpicTaskById(epic0.getId()), "deleted epic  was found");
-        assertNull(taskMan.getEpics(), "Epics are not empty");
-        assertNull(taskMan.getSubtasks(), "Subtasks are not empty");
+        assertEquals(0, taskMan.getEpics().size(), "Epics are not empty");
+        assertEquals(0, taskMan.getSubtasks().size(), "Subtasks are not empty");
     }
 
     @Test
@@ -106,7 +105,7 @@ class InMemoryTaskManagerTest {
         assertEquals(0, taskMan.historyManager.getHistory().size(), "history wrong size");
 
         assertNull(taskMan.getSubTaskById(subt1.getId()), "deleted subtask  was found");
-        assertNull(taskMan.getSubtasks(), "Subtasks are not empty");
+        assertEquals(0, taskMan.getSubtasks().size(), "Subtasks are not empty");
     }
 
     @Test

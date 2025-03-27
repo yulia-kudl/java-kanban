@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class Epic extends Task {
@@ -15,6 +14,7 @@ public class Epic extends Task {
     public ArrayList<Integer> getEpicSubTasks() {
         return epicSubTasks;
     }
+
 
 
     public void addSubTask(SubTask subTask) {
@@ -52,6 +52,7 @@ public class Epic extends Task {
     public Epic copyTask() {
         Epic epicCopy = new Epic(this.name, this.status, this.description);
         epicCopy.status = this.status;
+        epicCopy.id = this.id;
         epicCopy.epicSubTasks = new ArrayList<>(this.epicSubTasks);
         return epicCopy;
     }
