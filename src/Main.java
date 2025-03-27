@@ -79,9 +79,9 @@ public class Main {
 
 
         // printAllTasks(taskManager);
-        Task TaskForTest = new Task("task_for_test", TaskStatus.DONE, "for test");
+        Task taskForTest = new Task("task11", TaskStatus.DONE, "for test");
 
-        taskManager.createTask(TaskForTest);
+        taskManager.createTask(taskForTest);
         printAllTasks(taskManager);
 
 
