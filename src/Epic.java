@@ -1,62 +1,30 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class Epic extends Task {
-    private HashMap<Integer,SubTask> epicSubTasks;
+    private ArrayList<Integer> epicSubTasks;
 
     public Epic(String name, TaskStatus status, String description) {
         super(name, status, description);
-        this.epicSubTasks = new HashMap<>();
+        this.epicSubTasks = new ArrayList<>();
         this.status = TaskStatus.NEW;
+        this.type = TaskType.EPIC;
     }
 
-    @Override
-    public void setStatus(TaskStatus status) {
-    }
-
-    public HashMap<Integer, SubTask> getEpicSubTasks() {
+    public ArrayList<Integer> getEpicSubTasks() {
         return epicSubTasks;
     }
 
-    public void updateEpicStatus() {
-        if (epicSubTasks.isEmpty()) {
-            this.status = TaskStatus.NEW;
-            return;
-        }
-        boolean newTask = false;
-        boolean inProgress = false;
-        boolean done = false;
-
-        for (SubTask subTask : epicSubTasks.values()) {
-            if (subTask.status == TaskStatus.DONE) {
-                done = true;
-            }
-            if (subTask.status == TaskStatus.NEW) {
-                newTask = true;
-            }
-            if (subTask.status == TaskStatus.IN_PROGRESS) {
-                inProgress = true;
-            }
-        }
-        if ((newTask) && (!inProgress) && (!done)) {
-            this.status = TaskStatus.NEW;
-            return;
-        }
-        if ((!newTask) && (!inProgress) && (done)) {
-            this.status = TaskStatus.DONE;
-            return;
-        }
-        this.status = TaskStatus.IN_PROGRESS;
-    }
 
     public void addSubTask(SubTask subTask) {
-        epicSubTasks.put(subTask.getId(), subTask);
-        updateEpicStatus();
+        epicSubTasks.add(subTask.getId());
+        //updateEpicStatus();
     }
 
     public void deleteSubTask(SubTask subTask) {
-        epicSubTasks.remove(subTask.getId());
-        updateEpicStatus();
+        epicSubTasks.remove((Integer) subTask.getId());
+
     }
 
     public void updateEpic(Epic epic) {
@@ -76,16 +44,15 @@ public class Epic extends Task {
                 '}';
     }
 
-    public void setEpicSubTasks(HashMap<Integer, SubTask> epicSubTasks) {
+    public void setEpicSubTasks(ArrayList<Integer> epicSubTasks) {
         this.epicSubTasks = epicSubTasks;
     }
 
     @Override
     public Epic copyTask() {
-        Epic epicCopy = new Epic(this.name,this.status, this.description);
+        Epic epicCopy = new Epic(this.name, this.status, this.description);
         epicCopy.status = this.status;
-        epicCopy.epicSubTasks = new HashMap<>(this.epicSubTasks);
-        epicCopy.id = this.id;
+        epicCopy.epicSubTasks = new ArrayList<>(this.epicSubTasks);
         return epicCopy;
     }
 }

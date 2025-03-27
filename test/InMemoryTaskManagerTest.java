@@ -203,4 +203,5 @@ class InMemoryTaskManagerTest {
         assertEquals(4, taskMan.getHistoryForTaskManager().size(), "incorrect history size");
         assertEquals(epic0.getId(), taskMan.getHistoryForTaskManager().get(2).getId(), "incorrect value in history");
     }
+
 }
