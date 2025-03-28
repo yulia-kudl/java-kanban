@@ -1,13 +1,13 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class FileBackedTaskManagerTest {
 
   /*  File file;
@@ -36,7 +36,7 @@ class FileBackedTaskManagerTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        FileBackedTaskManager taskManager= FileBackedTaskManager.loadFromFile(file);
+        FileBackedTaskManager taskManager = FileBackedTaskManager.loadFromFile(file);
         assertNotNull(taskManager, "Object not initialized");
         assertNotNull(taskManager.getTasksHashMap(), "Tasks not initialized");
         assertNotNull(taskManager.getEpicHashMap(), "Epics not initialized");
@@ -88,7 +88,7 @@ class FileBackedTaskManagerTest {
         assertEquals("Epic3", taskManager.getEpicTaskById(3).name, "name not equal epic3");
         assertEquals(TaskStatus.IN_PROGRESS, taskManager.getEpicTaskById(3).status, "status not equal epic3");
         Epic epic = (Epic) taskManager.getEpicTaskById(3);
-       // assertEquals(2, epic.getEpicSubTasks().size(), "wrong number of subtasks epic 3");
+        // assertEquals(2, epic.getEpicSubTasks().size(), "wrong number of subtasks epic 3");
         assertTrue(epic.getEpicSubTasks().contains((Integer) 5), "wrong subtask epic 3/5");
         assertTrue(epic.getEpicSubTasks().contains((Integer) 7), "wrong subtask epic 3/7");
 
@@ -128,7 +128,7 @@ class FileBackedTaskManagerTest {
     }
 
     @Test
-    void  SaveToFile() {
+    void SaveToFile() {
         File file = null;
         try {
             file = File.createTempFile("test_load", ".tmp");
@@ -161,7 +161,6 @@ class FileBackedTaskManagerTest {
         assertEquals("4,SUBTASK,stask4,IN_PROGRESS,desc1 epic,3", str[3], "subtask is wrong");
         assertEquals("3,EPIC,epic3,IN_PROGRESS,desc epic3, ", str[4], "epic is wrong");
     }
-
 
 
 }

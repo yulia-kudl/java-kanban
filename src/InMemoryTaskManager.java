@@ -43,7 +43,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<SubTask> getSubtasks() {
-        if (subtasks.isEmpty()){
+        if (subtasks.isEmpty()) {
             return new ArrayList<>();
         }
         return subtasks.values().stream().toList();
@@ -274,7 +274,7 @@ public class InMemoryTaskManager implements TaskManager {
         return this.historyManager.getHistory();
     }
 
-    private  void generateAndSetId(Task task){
+    private void generateAndSetId(Task task) {
         idCounter++;
         task.setId(idCounter);
     }
