@@ -15,7 +15,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         Path path = Path.of(fileName);
     }
 
-    static FileBackedTaskManager loadFromFile(File file) {
+    public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager result = new FileBackedTaskManager(file.toString());
         String fileString = null;
         try {
@@ -50,28 +50,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         }
         result.setIdCounter(++counterNew);
         return result;
-    }
-
-    private static Task fromString(String value) {
-        String[] arrayTask = value.split(",");
-        if (TaskType.valueOf(arrayTask[1]) == TaskType.TASK) {
-            Task task = new Task(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4]);
-            task.setId(Integer.parseInt(arrayTask[0]));
-            return task;
-        }
-        if (TaskType.valueOf(arrayTask[1]) == TaskType.EPIC) {
-            Task task = new Epic(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4]);
-            task.setId(Integer.parseInt(arrayTask[0]));
-            task.setStatus(TaskStatus.valueOf(arrayTask[3]));
-            return task;
-        }
-        if (TaskType.valueOf(arrayTask[1]) == TaskType.SUBTASK) {
-            Task task = new SubTask(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4],
-                    Integer.parseInt(arrayTask[5]));
-            task.setId(Integer.parseInt(arrayTask[0]));
-            return task;
-        }
-        return null;
     }
 
     @Override
@@ -154,16 +132,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     }
 
-    /* @Override
-     public List<SubTask> getSubTasksByEpic(int epicId) {
-         return List.of();
-     }
-
-     @Override
-     public List<Task> getHistoryForTaskManager() {
-         return List.of();
-     }
- */
     private void save() {
 
         try (Writer fr = new FileWriter(this.fileName)) {
@@ -196,5 +164,28 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         return task.getId() + "," + task.type + "," + task.name + "," + task.status + "," + task.description + ","
                 + subTask.getEpicId() + '\n';
 
+    }
+
+
+    private static Task fromString(String value) {
+        String[] arrayTask = value.split(",");
+        if (TaskType.valueOf(arrayTask[1]) == TaskType.TASK) {
+            Task task = new Task(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4]);
+            task.setId(Integer.parseInt(arrayTask[0]));
+            return task;
+        }
+        if (TaskType.valueOf(arrayTask[1]) == TaskType.EPIC) {
+            Task task = new Epic(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4]);
+            task.setId(Integer.parseInt(arrayTask[0]));
+            task.setStatus(TaskStatus.valueOf(arrayTask[3]));
+            return task;
+        }
+        if (TaskType.valueOf(arrayTask[1]) == TaskType.SUBTASK) {
+            Task task = new SubTask(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4],
+                    Integer.parseInt(arrayTask[5]));
+            task.setId(Integer.parseInt(arrayTask[0]));
+            return task;
+        }
+        return null;
     }
 }
