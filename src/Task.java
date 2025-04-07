@@ -5,12 +5,14 @@ public class Task {
     protected String description;
     protected int id;
     protected TaskStatus status;
+    protected TaskType type;
 
 
     public Task(String name, TaskStatus status, String description) {
         this.name = name;
         this.status = status;
         this.description = description;
+        this.type = TaskType.TASK;
     }
 
 

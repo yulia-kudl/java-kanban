@@ -1,26 +1,24 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
     @Test
     void checkAddElementsToHistory() {
         InMemoryHistoryManager histMan = new InMemoryHistoryManager();
-        Task task0 = new Task("task0",TaskStatus.NEW, "task0 desc");
-        Task task1 = new Task("task01",TaskStatus.NEW, "task0 desc");
-        Task task2 = new Task("task02",TaskStatus.NEW, "task0 desc");
-        Task task3 = new Task("task03",TaskStatus.NEW, "task0 desc");
-        Task task4 = new Task("task04",TaskStatus.NEW, "task0 desc");
-        Task task5 = new Task("task05",TaskStatus.NEW, "task0 desc");
-        Task task6 = new Task("task06",TaskStatus.NEW, "task0 desc");
-        Task task7 = new Task("task078",TaskStatus.NEW, "task0 desc");
-        Task task8 = new Task("task09",TaskStatus.NEW, "task0 desc");
-        Task task9 = new Task("task011",TaskStatus.NEW, "task0 desc");
-        Task task10 = new Task("task032",TaskStatus.NEW, "task0 desc");
-        Task task11 = new Task("task0reg",TaskStatus.NEW, "task0 desc");
-        Task task12 = new Task("task0rewg",TaskStatus.NEW, "task0 desc");
+        Task task0 = new Task("task0", TaskStatus.NEW, "task0 desc");
+        Task task1 = new Task("task01", TaskStatus.NEW, "task0 desc");
+        Task task2 = new Task("task02", TaskStatus.NEW, "task0 desc");
+        Task task3 = new Task("task03", TaskStatus.NEW, "task0 desc");
+        Task task4 = new Task("task04", TaskStatus.NEW, "task0 desc");
+        Task task5 = new Task("task05", TaskStatus.NEW, "task0 desc");
+        Task task6 = new Task("task06", TaskStatus.NEW, "task0 desc");
+        Task task7 = new Task("task078", TaskStatus.NEW, "task0 desc");
+        Task task8 = new Task("task09", TaskStatus.NEW, "task0 desc");
+        Task task9 = new Task("task011", TaskStatus.NEW, "task0 desc");
+        Task task10 = new Task("task032", TaskStatus.NEW, "task0 desc");
+        Task task11 = new Task("task0reg", TaskStatus.NEW, "task0 desc");
+        Task task12 = new Task("task0rewg", TaskStatus.NEW, "task0 desc");
         task0.setId(0);
         task1.setId(1);
         task2.setId(2);
@@ -81,14 +79,14 @@ class InMemoryHistoryManagerTest {
         task2.setId(2);
         task3.setId(3);
         histMan.add(task);
-       assertEquals(1, histMan.getHistory().size(), "incorrect size 1");
-       assertEquals(1, histMan.size, "linked list size incorrect");
-       histMan.add(task1);
-       histMan.add(task2);
-       histMan.add(task3);
-       assertEquals(4, histMan.getHistory().size(), "incorrect size 3");
+        assertEquals(1, histMan.getHistory().size(), "incorrect size 1");
+        assertEquals(1, histMan.size, "linked list size incorrect");
+        histMan.add(task1);
+        histMan.add(task2);
+        histMan.add(task3);
+        assertEquals(4, histMan.getHistory().size(), "incorrect size 3");
         histMan.remove(task1.getId());
-        assertEquals(3, histMan.getHistory().size(),"incorrect size after delete  element");
+        assertEquals(3, histMan.getHistory().size(), "incorrect size after delete  element");
         histMan.remove(task.getId());
         assertEquals(histMan.head.task, task2, "incorrect new head");
         assertEquals(histMan.tail.task, task3, "incorrect  tail");
