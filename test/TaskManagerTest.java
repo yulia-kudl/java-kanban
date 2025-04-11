@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-abstract class TaskManagerTest<T extends TaskManager> {
+abstract class TaskManagerTest<TaskManager> {
     InMemoryTaskManager taskMan;
     Task task0;
     Task task1;
