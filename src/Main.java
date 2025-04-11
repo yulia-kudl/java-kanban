@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Main {
     static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy|HH:mm");
+
     public static void main(String[] args) {
 
         //  Path file = Files.createFile(Paths.get("C:\\Users\\Юлия\\IdeaProjects\\java-kanban\\out\\test\\lala"));
@@ -44,7 +45,7 @@ public class Main {
         taskManager.getSubTaskById(subTask1.getId());
         taskManager.getSubTaskById(subTask1.getId());
 
-       // taskManager.deleteAllEpics();
+        // taskManager.deleteAllEpics();
         printAllTasks(taskManager);
         System.out.println(taskManager.getPrioritizedTasks().toString());
 /*
