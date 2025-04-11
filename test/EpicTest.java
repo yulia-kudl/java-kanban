@@ -15,7 +15,7 @@ class EpicTest {
     @org.junit.jupiter.api.Test
     void setStatus() {
         epic.setStatus(TaskStatus.IN_PROGRESS);
-        assertEquals(epic.status, TaskStatus.IN_PROGRESS, "wrong status");
+        assertEquals(TaskStatus.IN_PROGRESS, epic.status, "wrong status");
     }
 
 }

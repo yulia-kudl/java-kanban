@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
     private final String fileName;
     private Path path;
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd_MM_yyyy|HH:mm");
 
     public FileBackedTaskManager(String fileName) {
         super();
@@ -48,7 +53,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             int epicId = sTask.getEpicId();
             result.getEpicHashMap().get(epicId).getEpicSubTasks().add(sTask.getId());
         }
+        result.getEpics().forEach(epic -> result.updateTimeForEpic(epic.getId()));
         result.setIdCounter(++counterNew);
+
+        result.getTasks().stream().filter(task -> task.startTime != null).forEach(result.tasksSorted::add);
+        result.getSubtasks().stream().filter(task -> task.startTime != null).forEach(result.tasksSorted::add);
         return result;
     }
 
@@ -135,7 +144,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     private void save() {
 
         try (Writer fr = new FileWriter(this.fileName)) {
-            fr.write("id,type,name,status,description,epic" + '\n');
+            fr.write("id,type,name,status,description,duration,startTime,epic" + '\n');
             for (Integer id : this.getTasksHashMap().keySet()) {
                 String taskString = toString(this.getTasksHashMap().get(id));
                 fr.write(taskString);
@@ -157,12 +166,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     private String toString(Task task) {
         if (task.type != TaskType.SUBTASK) {
             return task.getId() + "," + task.type + "," + task.name + "," + task.status + ","
-                    + task.description + ", " + '\n';
+                    + task.description + "," + (task.duration == null ? " " : task.duration.toMinutes()) + "," +
+                    (task.startTime == null ? " " : task.startTime.format(formatter)) + ", "
+                    + '\n';
         }
         SubTask subTask = (SubTask) task;
 
         return task.getId() + "," + task.type + "," + task.name + "," + task.status + "," + task.description + ","
-                + subTask.getEpicId() + '\n';
+                + task.duration.toMinutes() + "," + (task.startTime == null ? " " : task.startTime.format(formatter)) + "," + subTask.getEpicId() + '\n';
 
     }
 
@@ -170,7 +181,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     private static Task fromString(String value) {
         String[] arrayTask = value.split(",");
         if (TaskType.valueOf(arrayTask[1]) == TaskType.TASK) {
-            Task task = new Task(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4]);
+            Task task = new Task(arrayTask[2], TaskStatus.valueOf(arrayTask[3]),
+                    arrayTask[4], Duration.parse("PT" + arrayTask[5] + "M"), (Objects.equals(arrayTask[6], " ") ? null : LocalDateTime.parse(arrayTask[6], formatter)));
             task.setId(Integer.parseInt(arrayTask[0]));
             return task;
         }
@@ -178,11 +190,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             Task task = new Epic(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4]);
             task.setId(Integer.parseInt(arrayTask[0]));
             task.setStatus(TaskStatus.valueOf(arrayTask[3]));
+            task.startTime = arrayTask[6].equals(" ") ? null : LocalDateTime.parse(arrayTask[6], formatter);
+            task.duration = arrayTask[5].equals(" ") ? null : Duration.parse("PT" + arrayTask[5] + "M");
             return task;
         }
         if (TaskType.valueOf(arrayTask[1]) == TaskType.SUBTASK) {
             Task task = new SubTask(arrayTask[2], TaskStatus.valueOf(arrayTask[3]), arrayTask[4],
-                    Integer.parseInt(arrayTask[5]));
+                    Integer.parseInt(arrayTask[7]), Duration.parse("PT" + arrayTask[5] + "M"),
+                    (arrayTask[6].equals(" ") ? null : LocalDateTime.parse(arrayTask[6], formatter)));
             task.setId(Integer.parseInt(arrayTask[0]));
             return task;
         }

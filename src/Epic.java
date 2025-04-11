@@ -1,11 +1,24 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
 public class Epic extends Task {
     private ArrayList<Integer> epicSubTasks;
+    private LocalDateTime endTime;
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
 
     public Epic(String name, TaskStatus status, String description) {
-        super(name, status, description);
+        super(name, status, description, null, null);
         this.epicSubTasks = new ArrayList<>();
         this.status = TaskStatus.NEW;
         this.type = TaskType.EPIC;
@@ -18,7 +31,6 @@ public class Epic extends Task {
 
     public void addSubTask(SubTask subTask) {
         epicSubTasks.add(subTask.getId());
-        //updateEpicStatus();
     }
 
     public void deleteSubTask(SubTask subTask) {
@@ -40,6 +52,9 @@ public class Epic extends Task {
                 ", id=" + id +
                 ", status=" + status + '\'' +
                 "epicSubTasks=" + epicSubTasks +
+                ", duration=" + (duration == null ? null : duration.toString()) +
+                ", startTime= " + (startTime == null ? null : startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))) +
+                ", endTime= " + (endTime == null ? null : endTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))) +
                 '}';
     }
 
@@ -53,6 +68,7 @@ public class Epic extends Task {
         epicCopy.status = this.status;
         epicCopy.id = this.id;
         epicCopy.epicSubTasks = new ArrayList<>(this.epicSubTasks);
+        epicCopy.endTime = this.endTime;
         return epicCopy;
     }
 }
