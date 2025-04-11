@@ -1,8 +1,19 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class SubTask extends Task {
     private int epicId;
 
-    public SubTask(String name, TaskStatus status, String description, int epicId) {
-        super(name, status, description);
+    public SubTask(String name, TaskStatus status, String description, int epicId, Duration duration) {
+        super(name, status, description, duration);
+        this.epicId = epicId;
+        this.type = TaskType.SUBTASK;
+    }
+
+    public SubTask(String name, TaskStatus status, String description, int epicId, Duration duration,
+                   LocalDateTime startDate) {
+        super(name, status, description, duration, startDate);
         this.epicId = epicId;
         this.type = TaskType.SUBTASK;
     }
@@ -17,7 +28,7 @@ public class SubTask extends Task {
 
     @Override
     public SubTask copyTask() {
-        SubTask taskCopy = new SubTask(this.name, this.status, this.description, this.getEpicId());
+        SubTask taskCopy = new SubTask(this.name, this.status, this.description, this.getEpicId(), this.duration, this.startTime);
         taskCopy.id = this.id;
         return taskCopy;
     }
@@ -30,6 +41,8 @@ public class SubTask extends Task {
                 ", description='" + description + '\'' +
                 ", id=" + id +
                 ", status=" + status +
+                ", duration=" + duration.toString() +
+                ", startTime= " + ( startTime == null? null :startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))) +
                 '}';
     }
 }

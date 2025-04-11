@@ -1,6 +1,9 @@
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
-
+    static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy|HH:mm");
     public static void main(String[] args) {
 
         //  Path file = Files.createFile(Paths.get("C:\\Users\\Юлия\\IdeaProjects\\java-kanban\\out\\test\\lala"));
@@ -9,8 +12,10 @@ public class Main {
 //FileBackedTaskManager taskManager = FileBackedTaskManager.loadFromFile(file);
 
         TaskManager taskManager = Managers.getDefault();
-        Task task1 = new Task("Посмотреть фильм", TaskStatus.NEW, "фильм Гарри Поттер");
-        Task task2 = new Task("Прочитать книгу", TaskStatus.NEW, "Алиса в стране чудес");
+        Task task1 = new Task("Посмотреть фильм", TaskStatus.NEW, "фильм Гарри Поттер",
+                Duration.parse("PT1H"), LocalDateTime.now());
+        Task task2 = new Task("Прочитать книгу", TaskStatus.NEW, "Алиса в стране чудес",
+                Duration.parse("PT3H"), LocalDateTime.parse("01_01_2025|00:00", outputFormatter));
         Epic epic1 = new Epic("Купить продукты", TaskStatus.NEW, "продукты из Ашана на неделю");
         Epic epic2 = new Epic("Приготовить пирог", TaskStatus.NEW,
                 "торт шоколадный с начинкой сникерс");
@@ -20,9 +25,12 @@ public class Main {
         taskManager.createEpic(epic1);
         taskManager.createEpic(epic2);
 
-        SubTask subTask1 = new SubTask("Молоко", TaskStatus.NEW, "Простоквашино", epic1.getId());
-        SubTask subTask2 = new SubTask("Хлеб", TaskStatus.NEW, "Зерновой", epic1.getId());
-        SubTask subTask3 = new SubTask("Шоколад", TaskStatus.NEW, "с шоколадом и орехами", epic1.getId());
+        SubTask subTask1 = new SubTask("Молоко", TaskStatus.NEW, "Простоквашино", epic1.getId(),
+                Duration.parse("PT24H"), LocalDateTime.parse("03_04_2025|01:00", outputFormatter));
+        SubTask subTask2 = new SubTask("Хлеб", TaskStatus.NEW, "Зерновой", epic1.getId(),
+                Duration.parse("PT240H"), LocalDateTime.parse("03_04_2020|01:00", outputFormatter));
+        SubTask subTask3 = new SubTask("Шоколад", TaskStatus.NEW, "с шоколадом и орехами", epic1.getId(),
+                Duration.parse("PT4H"), LocalDateTime.parse("03_04_2020|01:00", outputFormatter));
 
         taskManager.createSubTask(subTask1);
         taskManager.createSubTask(subTask2);
@@ -36,8 +44,9 @@ public class Main {
         taskManager.getSubTaskById(subTask1.getId());
         taskManager.getSubTaskById(subTask1.getId());
 
-        taskManager.deleteAllEpics();
+       // taskManager.deleteAllEpics();
         printAllTasks(taskManager);
+        System.out.println(taskManager.getPrioritizedTasks().toString());
 /*
         task1.setStatus(TaskStatus.IN_PROGRESS);
         task2.setStatus(TaskStatus.DONE);
