@@ -42,7 +42,7 @@ public class SubTask extends Task {
                 ", id=" + id +
                 ", status=" + status +
                 ", duration=" + duration.toString() +
-                ", startTime= " + ( startTime == null? null :startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))) +
+                ", startTime= " + (startTime == null ? null : startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))) +
                 '}';
     }
 }
