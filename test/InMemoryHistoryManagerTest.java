@@ -1,24 +1,26 @@
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
     @Test
     void checkAddElementsToHistory() {
         InMemoryHistoryManager histMan = new InMemoryHistoryManager();
-        Task task0 = new Task("task0", TaskStatus.NEW, "task0 desc");
-        Task task1 = new Task("task01", TaskStatus.NEW, "task0 desc");
-        Task task2 = new Task("task02", TaskStatus.NEW, "task0 desc");
-        Task task3 = new Task("task03", TaskStatus.NEW, "task0 desc");
-        Task task4 = new Task("task04", TaskStatus.NEW, "task0 desc");
-        Task task5 = new Task("task05", TaskStatus.NEW, "task0 desc");
-        Task task6 = new Task("task06", TaskStatus.NEW, "task0 desc");
-        Task task7 = new Task("task078", TaskStatus.NEW, "task0 desc");
-        Task task8 = new Task("task09", TaskStatus.NEW, "task0 desc");
-        Task task9 = new Task("task011", TaskStatus.NEW, "task0 desc");
-        Task task10 = new Task("task032", TaskStatus.NEW, "task0 desc");
-        Task task11 = new Task("task0reg", TaskStatus.NEW, "task0 desc");
-        Task task12 = new Task("task0rewg", TaskStatus.NEW, "task0 desc");
+        Task task0 = new Task("task0", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task1 = new Task("task01", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task2 = new Task("task02", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task3 = new Task("task03", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task4 = new Task("task04", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task5 = new Task("task05", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task6 = new Task("task06", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task7 = new Task("task078", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task8 = new Task("task09", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task9 = new Task("task011", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task10 = new Task("task032", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task11 = new Task("task0reg", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task12 = new Task("task0rewg", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
         task0.setId(0);
         task1.setId(1);
         task2.setId(2);
@@ -58,7 +60,7 @@ class InMemoryHistoryManagerTest {
     @Test
     void checkValuesOfUpdatedElements() {
         InMemoryHistoryManager histMan = new InMemoryHistoryManager();
-        Task task = new Task("task0", TaskStatus.NEW, "task0 desc");
+        Task task = new Task("task0", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
         histMan.add(task);
         task.setDescription("new decs");
         assertNotEquals(task.getDescription(), histMan.getHistory().getFirst().getDescription(),
@@ -70,10 +72,10 @@ class InMemoryHistoryManagerTest {
     @Test
     void checkHistoryRemove() {
         InMemoryHistoryManager histMan = new InMemoryHistoryManager();
-        Task task = new Task("task0", TaskStatus.NEW, "task0 desc");
-        Task task1 = new Task("task01", TaskStatus.NEW, "task0 desc");
-        Task task2 = new Task("task02", TaskStatus.NEW, "task0 desc");
-        Task task3 = new Task("task03", TaskStatus.NEW, "task0 desc");
+        Task task = new Task("task0", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task1 = new Task("task01", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task2 = new Task("task02", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
+        Task task3 = new Task("task03", TaskStatus.NEW, "task0 desc", Duration.parse("PT30M"));
         task.setId(0);
         task1.setId(1);
         task2.setId(2);

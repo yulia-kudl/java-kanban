@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -10,7 +13,7 @@ class SubTaskTest {
 
     @BeforeEach
     void setUp() {
-        subt = new SubTask("task", TaskStatus.NEW, "desc", 10);
+        subt = new SubTask("task", TaskStatus.NEW, "desc", 10, Duration.parse("PT20M"), LocalDateTime.now());
     }
 
     @Test
