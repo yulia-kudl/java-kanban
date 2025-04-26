@@ -40,7 +40,7 @@ public class SubTaskHandler extends BaseHttpHandler implements HttpHandler {
     private void handleDeleteSubTask(HttpExchange exchange) throws IOException {
         int id = getTaskId(exchange);
         taskManager.deleteSubTask(id);
-        sendText(exchange, "task deleted", 200 );
+        sendText(exchange, "task deleted", 200);
 
     }
 
@@ -56,8 +56,7 @@ public class SubTaskHandler extends BaseHttpHandler implements HttpHandler {
                 taskManager.updateSubTask(subtask);
                 sendText(exchange, "", 201);
             }
-        }
-        catch (IntersectionException e) {
+        } catch (IntersectionException e) {
             sendHasInteractions(exchange);
         }
     }
@@ -68,8 +67,7 @@ public class SubTaskHandler extends BaseHttpHandler implements HttpHandler {
             Task task = taskManager.getSubTaskById(id);
             String taskJson = gson.toJson(task);
             sendText(exchange, taskJson, 200);
-        }
-        catch ( NoSuchElementException exception) {
+        } catch (NoSuchElementException exception) {
             sendNotFound(exchange);
         } catch (IOException e) {
             throw new RuntimeException(e);
