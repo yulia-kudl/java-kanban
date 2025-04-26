@@ -57,8 +57,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
                 taskManager.updateTask(task);
                 sendText(exchange, "", 201);
             }
-        }
-        catch (IntersectionException e) {
+        } catch (IntersectionException e) {
             sendHasInteractions(exchange);
         }
     }
@@ -69,8 +68,7 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
             Task task = taskManager.getTaskById(id);
             String taskJson = gson.toJson(task);
             sendText(exchange, taskJson, 200);
-        }
-        catch ( NoSuchElementException exception) {
+        } catch (NoSuchElementException exception) {
             sendNotFound(exchange);
         } catch (IOException e) {
             throw new RuntimeException(e);
