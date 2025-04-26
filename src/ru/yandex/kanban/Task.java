@@ -1,3 +1,5 @@
+package ru.yandex.kanban;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +12,19 @@ public class Task {
     protected TaskStatus status;
     protected TaskType type;
     protected Duration duration;
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
+    }
+
     protected LocalDateTime startTime;
 
 
@@ -77,7 +92,7 @@ public class Task {
                 ", id=" + id +
                 ", status=" + status +
                 ", duration=" + duration.toString() +
-                ", startTime= " + startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")) +
+                ", startTime= " + (startTime == null ? null : startTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))) +
                 '}';
     }
 
@@ -90,5 +105,25 @@ public class Task {
             return null;
         }
         return startTime.plus(duration);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 }

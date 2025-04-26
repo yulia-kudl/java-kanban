@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.kanban.Task;
+import ru.yandex.kanban.TaskStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

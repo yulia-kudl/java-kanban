@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+import ru.yandex.kanban.InMemoryHistoryManager;
+import ru.yandex.kanban.Task;
+import ru.yandex.kanban.TaskStatus;
 
 import java.time.Duration;
 
@@ -53,7 +56,7 @@ class InMemoryHistoryManagerTest {
         histMan.add(task12);
         assertEquals(13, histMan.getHistory().size(), "incorrect list size");
         assertEquals(histMan.tail.task, task12, "incorrect last element");
-        assertEquals("task0", histMan.getHistory().getFirst().name, "incorrect first element");
+        assertEquals("task0", histMan.getHistory().getFirst().getName(), "incorrect first element");
 
     }
 

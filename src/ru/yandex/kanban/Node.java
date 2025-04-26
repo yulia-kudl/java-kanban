@@ -1,3 +1,5 @@
+package ru.yandex.kanban;
+
 public class Node {
     public Task task;
     public Node next;

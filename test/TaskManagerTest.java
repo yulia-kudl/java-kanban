@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.kanban.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -47,7 +48,12 @@ abstract class TaskManagerTest<TaskManager> {
     @Test
     void createTaskIntersectionOrWithoutStartDate() {
         taskMan.createTask(task1);
-        taskMan.createTask(task2);
+        try {
+            taskMan.createTask(task2);
+        }
+        catch (IntersectionException ignored) {
+
+        }
         taskMan.createTask(task3);
 
         assertEquals(2, taskMan.getTasks().size(), "incorrect task size");
@@ -58,9 +64,15 @@ abstract class TaskManagerTest<TaskManager> {
 
     @Test
     void createSubTaskIntersectionOrWithoutStartDate() {
+
         taskMan.createEpic(epic0);
         taskMan.createSubTask(subTask1);
-        taskMan.createSubTask(subTask2);
+        try {
+            taskMan.createSubTask(subTask2);
+        }
+        catch (IntersectionException ignored) {
+
+        }
         taskMan.createSubTask(subTask3);
 
         assertEquals(2, taskMan.getSubtasks().size(), "incorrect subtask size");
@@ -74,15 +86,19 @@ abstract class TaskManagerTest<TaskManager> {
         taskMan.createTask(task0);
         taskMan.createTask(task1);
         Task task3 = task0.copyTask();
-        task3.startTime = date3;// intersection
+        task3.setStartTime(date3);// intersection
+        try {
+            taskMan.updateTask(task3);
+        }
+        catch (IntersectionException ignored) {
+
+        }
+        assertEquals(date1, taskMan.getTaskById(1).getStartTime(), "time was updated with intersection");
+
+        task3.setStartTime(date4);
         taskMan.updateTask(task3);
 
-        assertEquals(date1, taskMan.getTaskById(1).startTime, "time was updated with intersection");
-
-        task3.startTime = date4;
-        taskMan.updateTask(task3);
-
-        assertEquals(date4, taskMan.getTaskById(1).startTime, "time was not updated");
+        assertEquals(date4, taskMan.getTaskById(1).getStartTime(), "time was not updated");
 
     }
 
@@ -97,15 +113,20 @@ abstract class TaskManagerTest<TaskManager> {
         taskMan.createSubTask(subTask4);
 
         SubTask subTask10 = subTask4.copyTask();
-        subTask10.startTime = date3;// intersection
+        subTask10.setStartTime(date3);// intersection
+        try {
+            taskMan.updateSubTask(subTask10);
+        }
+        catch (IntersectionException ignored) {
+
+        }
+
+       assertEquals(date1, taskMan.getSubTaskById(3).getStartTime(), "time was updated with intersection");
+
+        subTask10.setStartTime(date4);
         taskMan.updateSubTask(subTask10);
 
-       assertEquals(date1, taskMan.getSubTaskById(3).startTime, "time was updated with intersection");
-
-        subTask10.startTime = date4;
-        taskMan.updateSubTask(subTask10);
-
-        assertEquals(date4, taskMan.getSubTaskById(3).startTime, "time was not updated");
+        assertEquals(date4, taskMan.getSubTaskById(3).getStartTime(), "time was not updated");
 
 
     }

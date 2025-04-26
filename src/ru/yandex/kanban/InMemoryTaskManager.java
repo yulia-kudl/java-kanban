@@ -1,3 +1,5 @@
+package ru.yandex.kanban;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -29,15 +31,15 @@ public class InMemoryTaskManager implements TaskManager {
         this.idCounter = idCounter;
     }
 
-    protected HashMap<Integer, Task> getTasksHashMap() {
+    public HashMap<Integer, Task> getTasksHashMap() {
         return this.tasks;
     }
 
-    protected HashMap<Integer, SubTask> getSubTasksHashMap() {
+    public HashMap<Integer, SubTask> getSubTasksHashMap() {
         return this.subtasks;
     }
 
-    protected HashMap<Integer, Epic> getEpicHashMap() {
+    public HashMap<Integer, Epic> getEpicHashMap() {
         return this.epics;
     }
 
@@ -111,10 +113,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         if (tasks.isEmpty()) {
-            return null;
+            throw  new NoSuchElementException();
         }
         if (!(tasks.containsKey(id))) {
-            return null;
+            throw new NoSuchElementException();
         }
         historyManager.add(tasks.get(id));
         return tasks.get(id);
@@ -123,10 +125,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getSubTaskById(int id) {
         if (subtasks.isEmpty()) {
-            return null;
+             throw new NoSuchElementException();
         }
         if (!(subtasks.containsKey(id))) {
-            return null;
+            throw new NoSuchElementException();
         }
         historyManager.add(subtasks.get(id));
         return subtasks.get(id);
@@ -135,10 +137,10 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getEpicTaskById(int id) {
         if (epics.isEmpty()) {
-            return null;
+            throw new NoSuchElementException();
         }
         if (!(epics.containsKey(id))) {
-            return null;
+            throw new NoSuchElementException();
         }
         historyManager.add(epics.get(id));
         return epics.get(id);
@@ -151,7 +153,7 @@ public class InMemoryTaskManager implements TaskManager {
             return;
         }
         if (newTask.startTime != null && checkIntersection(newTask)) {
-            return; // пересечение
+            throw new IntersectionException("пересечение"); // пересечение
         }
         generateAndSetId(newTask);
         if (newTask.startTime != null) {
@@ -182,7 +184,7 @@ public class InMemoryTaskManager implements TaskManager {
             return;
         }
         if (newSubTask.startTime != null && checkIntersection(newSubTask)) {
-            return; // пересечение
+            throw new IntersectionException("пересечение"); // пересечение
         }
         generateAndSetId(newSubTask);
         if (newSubTask.startTime != null) {
@@ -207,7 +209,8 @@ public class InMemoryTaskManager implements TaskManager {
         }
         if (checkTaskBeforeUpdate(task, tasks.get(task.id))) {
             tasks.put(task.getId(), task);
-        }
+        } else
+            throw  new IntersectionException("пересечение");
     }
 
     @Override
@@ -243,6 +246,8 @@ public class InMemoryTaskManager implements TaskManager {
             subtasks.put(subTask.getId(), subTask);
             updateEpicStatus(subTask.getEpicId());
             updateTimeForEpic(subTask.getEpicId());
+        } else {
+            throw  new IntersectionException("песечение");
         }
     }
 
@@ -290,7 +295,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<SubTask> getSubTasksByEpic(int epicId) {
         if (!epics.containsKey(epicId)) {
-            return null;
+            throw new NoSuchElementException();
         }
         List<SubTask> result = new ArrayList<>();
         for (int id : epics.get(epicId).getEpicSubTasks()) {

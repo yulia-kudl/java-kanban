@@ -1,3 +1,5 @@
+package ru.yandex.kanban;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,7 +13,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     public Node tail;
     public int size;
 
-    InMemoryHistoryManager() {
+    public InMemoryHistoryManager() {
         idMap = new HashMap<>();
         taskHistoryList = new LinkedList<>();
     }

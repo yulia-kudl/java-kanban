@@ -1,3 +1,4 @@
+package ru.yandex.kanban;
 
 public class Managers {
 

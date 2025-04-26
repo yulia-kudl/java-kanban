@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.yandex.kanban.SubTask;
+import ru.yandex.kanban.TaskStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -33,7 +35,7 @@ class SubTaskTest {
         assertEquals(subt2.getEpicId(), subt.getEpicId(), "incorrect value");
         assertEquals(subt2.getDescription(), subt.getDescription(), "incorrect value");
         subt2.setStatus(TaskStatus.IN_PROGRESS);
-        assertNotEquals(subt2.status, subt.status, "incorrect status value afterupdating");
+        assertNotEquals(subt2.getStatus(), subt.getStatus(), "incorrect status value afterupdating");
 
     }
 }
