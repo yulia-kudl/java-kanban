@@ -13,7 +13,7 @@ public class BaseHttpHandler implements HttpHandler {
     protected static TaskManager taskManager;
     protected static Gson gson;
 
-    enum EndPoint {GET_TASKS, GET_TASK_BY_ID, CREATE_UPDATE_TASK, DELETE_TASK, EPIC_SUBTASKS, UNKNOWN}
+    enum EndPoint { GET_TASKS, GET_TASK_BY_ID, CREATE_UPDATE_TASK, DELETE_TASK, EPIC_SUBTASKS, UNKNOWN }
 
     public BaseHttpHandler() {
 
