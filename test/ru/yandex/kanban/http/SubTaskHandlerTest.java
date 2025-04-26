@@ -63,7 +63,7 @@ class SubTaskHandlerTest {
 
     @AfterEach
     public void shutDown() {
-        HttpTaskServer.StopServer(httpServer);
+        HttpTaskServer.stopServer(httpServer);
 
     }
 

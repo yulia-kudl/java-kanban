@@ -1,56 +1,14 @@
 package ru.yandex.kanban.http;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 import com.sun.net.httpserver.HttpServer;
 import ru.yandex.kanban.Managers;
-import ru.yandex.kanban.Task;
 import ru.yandex.kanban.TaskManager;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-class TasksListTypeToken extends TypeToken<List<Task>> {
-
-}
-
-class DurationTypeAdapter extends TypeAdapter<Duration> {
-
-    @Override
-    public void write(final JsonWriter jsonWriter, final Duration duration) throws IOException {
-        jsonWriter.value(duration == null ? null : duration.toMinutes());
-
-    }
-
-    @Override
-    public Duration read(final JsonReader jsonReader) throws IOException {
-        return Duration.ofMinutes(Integer.parseInt(jsonReader.nextString()));
-
-    }
-}
-
-class LocalDateTimeTypeAdapter extends TypeAdapter<LocalDateTime> {
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-
-    @Override
-    public void write(final JsonWriter jsonWriter, final LocalDateTime localDateTime) throws IOException {
-        jsonWriter.value(localDateTime == null ? null : localDateTime.format(dateTimeFormatter));
-
-    }
-
-    @Override
-    public LocalDateTime read(final JsonReader jsonReader) throws IOException {
-        return LocalDateTime.parse(jsonReader.nextString(), dateTimeFormatter);
-
-    }
-}
 
 public class HttpTaskServer {
     private static final int PORT = 8080;
@@ -75,7 +33,7 @@ public class HttpTaskServer {
         return httpServer;
     }
 
-    public static void StopServer(HttpServer h) {
+    public static void stopServer(HttpServer h) {
         h.stop(2);
 
     }

@@ -63,7 +63,7 @@ public class TaskHandlerTest {
 
     @AfterEach
     public void shutDown() {
-        HttpTaskServer.StopServer(httpServer);
+        HttpTaskServer.stopServer(httpServer);
 
     }
 

@@ -59,7 +59,7 @@ class EpicHandlerTest {
 
     @AfterEach
     public void shutDown() {
-        HttpTaskServer.StopServer(httpServer);
+        HttpTaskServer.stopServer(httpServer);
 
     }
 
