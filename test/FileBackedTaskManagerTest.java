@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import ru.yandex.kanban.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -64,28 +65,28 @@ class FileBackedTaskManagerTest {
         assertEquals(9, taskManager.getIdCounter(), "Counter incorrect");
 
         assertEquals("Description task1", taskManager.getTaskById(1).getDescription(), "descr not equal task1");
-        assertEquals("Task1", taskManager.getTaskById(1).name, "name not equal task1");
-        assertEquals(TaskStatus.NEW, taskManager.getTaskById(1).status, "status not equal task1");
-        assertEquals(Duration.parse("PT90M"), taskManager.getTaskById(1).duration, "wrong duration");
-        assertEquals(LocalDateTime.parse("01_02_2025|07:00", formatter), taskManager.getTaskById(1).startTime, "wrong start time");
+        assertEquals("Task1", taskManager.getTaskById(1).getName(), "name not equal task1");
+        assertEquals(TaskStatus.NEW, taskManager.getTaskById(1).getStatus(), "status not equal task1");
+        assertEquals(Duration.parse("PT90M"), taskManager.getTaskById(1).getDuration(), "wrong duration");
+        assertEquals(LocalDateTime.parse("01_02_2025|07:00", formatter), taskManager.getTaskById(1).getStartTime(), "wrong start time");
 
 
         assertEquals("Description task2", taskManager.getTaskById(2).getDescription(), "descr not equal task2");
-        assertEquals("Task2", taskManager.getTaskById(2).name, "name not equal task2");
-        assertEquals(TaskStatus.DONE, taskManager.getTaskById(2).status, "status not equal task2");
-        assertEquals(Duration.parse("PT170M"), taskManager.getTaskById(2).duration, "wrong duration");
-        assertEquals(LocalDateTime.parse("02_04_2024|09:30", formatter), taskManager.getTaskById(2).startTime, "wrong start time");
+        assertEquals("Task2", taskManager.getTaskById(2).getName(), "name not equal task2");
+        assertEquals(TaskStatus.DONE, taskManager.getTaskById(2).getStatus(), "status not equal task2");
+        assertEquals(Duration.parse("PT170M"), taskManager.getTaskById(2).getDuration(), "wrong duration");
+        assertEquals(LocalDateTime.parse("02_04_2024|09:30", formatter), taskManager.getTaskById(2).getStartTime(), "wrong start time");
 
 
         assertEquals("Description epic3", taskManager.getEpicTaskById(3).getDescription(), "descr not equal epic3");
-        assertEquals("Epic3", taskManager.getEpicTaskById(3).name, "name not equal epic3");
-        assertEquals(TaskStatus.IN_PROGRESS, taskManager.getEpicTaskById(3).status, "status not equal epic3");
+        assertEquals("Epic3", taskManager.getEpicTaskById(3).getName(), "name not equal epic3");
+        assertEquals(TaskStatus.IN_PROGRESS, taskManager.getEpicTaskById(3).getStatus(), "status not equal epic3");
         Epic epic = (Epic) taskManager.getEpicTaskById(3);
         // assertEquals(2, epic.getEpicSubTasks().size(), "wrong number of subtasks epic 3");
         assertTrue(epic.getEpicSubTasks().contains((Integer) 5), "wrong subtask epic 3/5");
         assertTrue(epic.getEpicSubTasks().contains((Integer) 7), "wrong subtask epic 3/7");
-        assertEquals(Duration.parse("PT70M"), epic.duration, "wrong duration");
-        assertEquals(LocalDateTime.parse("01_01_2025|08:59", formatter), epic.startTime,
+        assertEquals(Duration.parse("PT70M"), epic.getDuration(), "wrong duration");
+        assertEquals(LocalDateTime.parse("01_01_2025|08:59", formatter), epic.getStartTime(),
                 "wrong start time");
         assertEquals(LocalDateTime.parse("02_03_2025|12:20", formatter), epic.getEndTime(),
                 "wrong end time for epic");
@@ -93,24 +94,24 @@ class FileBackedTaskManagerTest {
 
 
         assertEquals("Description epic4", taskManager.getEpicTaskById(4).getDescription(), "descr not equal epic4");
-        assertEquals("Epic4", taskManager.getEpicTaskById(4).name, "name not equal epic4");
-        assertEquals(TaskStatus.DONE, taskManager.getEpicTaskById(4).status, "status not equal epic4");
+        assertEquals("Epic4", taskManager.getEpicTaskById(4).getName(), "name not equal epic4");
+        assertEquals(TaskStatus.DONE, taskManager.getEpicTaskById(4).getStatus(), "status not equal epic4");
         epic = (Epic) taskManager.getEpicTaskById(4);
         assertEquals(1, epic.getEpicSubTasks().size(), "wrong number of subtasks epic 4");
         assertTrue(epic.getEpicSubTasks().contains((Integer) 6), "wrong subtask epic 3/5");
-        assertEquals(Duration.parse("PT90M"), epic.duration, "wrong duration epic2");
-        assertEquals(LocalDateTime.parse("01_03_2025|06:45", formatter), epic.startTime,
+        assertEquals(Duration.parse("PT90M"), epic.getDuration(), "wrong duration epic2");
+        assertEquals(LocalDateTime.parse("01_03_2025|06:45", formatter), epic.getStartTime(),
                 "wrong start time epic4");
 
 
 
         assertEquals("Description sub task5", taskManager.getSubTaskById(5).getDescription(), "descr not equal task5");
-        assertEquals("Sub Task5", taskManager.getSubTaskById(5).name, "name not equal sub task5");
-        assertEquals(TaskStatus.DONE, taskManager.getSubTaskById(5).status, "status not equal sub task5");
+        assertEquals("Sub Task5", taskManager.getSubTaskById(5).getName(), "name not equal sub task5");
+        assertEquals(TaskStatus.DONE, taskManager.getSubTaskById(5).getStatus(), "status not equal sub task5");
         SubTask subtask = (SubTask) taskManager.getSubTaskById(5);
         assertEquals(3, subtask.getEpicId(), "wrong epic id for subtask 5 ");
-        assertEquals(Duration.parse("PT50M"), subtask.duration, "wrong duration epic2");
-        assertEquals(LocalDateTime.parse("01_01_2025|08:59", formatter), subtask.startTime,
+        assertEquals(Duration.parse("PT50M"), subtask.getDuration(), "wrong duration epic2");
+        assertEquals(LocalDateTime.parse("01_01_2025|08:59", formatter), subtask.getStartTime(),
                 "wrong start time subtask5");
 
         assertEquals(5, taskManager.getPrioritizedTasks().size(), "wrong prioritized size");

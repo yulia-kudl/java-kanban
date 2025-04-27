@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
+import ru.yandex.kanban.Epic;
+import ru.yandex.kanban.TaskStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +17,7 @@ class EpicTest {
     @org.junit.jupiter.api.Test
     void setStatus() {
         epic.setStatus(TaskStatus.IN_PROGRESS);
-        assertEquals(TaskStatus.IN_PROGRESS, epic.status, "wrong status");
+        assertEquals(TaskStatus.IN_PROGRESS, epic.getStatus(), "wrong status");
     }
 
 }

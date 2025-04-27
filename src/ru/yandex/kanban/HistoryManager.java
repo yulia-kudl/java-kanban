@@ -1,3 +1,5 @@
+package ru.yandex.kanban;
+
 import java.util.List;
 
 public interface HistoryManager {

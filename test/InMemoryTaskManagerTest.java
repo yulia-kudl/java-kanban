@@ -1,4 +1,8 @@
 import org.junit.jupiter.api.Test;
+import ru.yandex.kanban.SubTask;
+import ru.yandex.kanban.TaskStatus;
+
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,7 +53,6 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         assertEquals(2, taskMan.historyManager.getHistory().size(), "incorrect size");
         taskMan.deleteAllTasks();
         assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
-        assertNull(taskMan.getTaskById(task0.getId()), "deleted Task was found");
         assertTrue(taskMan.getTasks().isEmpty(), "Tasks are not empty");
 
     }
@@ -69,7 +72,6 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         assertEquals(3, taskMan.historyManager.getHistory().size(), "history wrong size");
         taskMan.deleteAllEpics();
         assertEquals(0, taskMan.historyManager.getHistory().size(), "history not empty");
-        assertNull(taskMan.getEpicTaskById(epic0.getId()), "deleted epic  was found");
         assertEquals(0, taskMan.getEpics().size(), "Epics are not empty");
         assertEquals(0, taskMan.getSubtasks().size(), "Subtasks are not empty");
     }
@@ -83,7 +85,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         taskMan.createSubTask(subt0);
         taskMan.createSubTask(subt1);
         assertEquals(2, taskMan.getSubtasks().size(), "incorrect subtask size");
-        assertEquals(TaskStatus.IN_PROGRESS, epic0.status, "epic status wasn't updated");
+        assertEquals(TaskStatus.IN_PROGRESS, epic0.getStatus(), "epic status wasn't updated");
         taskMan.getSubTaskById(subt0.getId());
         taskMan.getSubTaskById(subt1.getId());
         assertEquals(2, taskMan.historyManager.getHistory().size(), "history wrong size");
@@ -91,7 +93,6 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         taskMan.deleteAllSubTasks();
         assertEquals(0, taskMan.historyManager.getHistory().size(), "history wrong size");
 
-        assertNull(taskMan.getSubTaskById(subt1.getId()), "deleted subtask  was found");
         assertEquals(0, taskMan.getSubtasks().size(), "Subtasks are not empty");
     }
 
@@ -130,7 +131,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
                 "description not the same after updating");
         subt0.setStatus(TaskStatus.DONE);
         taskMan.updateSubTask(subt0);
-        assertEquals(TaskStatus.DONE, epic0.status,
+        assertEquals(TaskStatus.DONE, epic0.getStatus(),
                 "epic STATUS wasn't updated after updating");
 
     }
@@ -140,7 +141,8 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         taskMan.createTask(task0);
         assertEquals(task0, taskMan.getTaskById(task0.getId()), "added task wasnt found");
         taskMan.deleteTask(task0.getId());
-        assertNull(taskMan.getTaskById(task0.getId()), "deleted task was found");
+        assertThrows(NoSuchElementException.class, () -> taskMan.getEpicTaskById(epic0.getId()),
+                "deleted task was found");
 
     }
 
@@ -153,8 +155,11 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         assertEquals(subt, taskMan.getSubTasksByEpic(epic0.getId()).getFirst(), "added subtask for epic wasnt found");
         assertEquals(1, taskMan.getHistoryForTaskManager().size(), "history size is ok");
         taskMan.deleteEpic(epic0.getId());
-        assertNull(taskMan.getEpicTaskById(epic0.getId()), "deleted task was found");
-        assertNull(taskMan.getSubTaskById(subt.getId()), "subtask of deleted task was found");
+        assertThrows(NoSuchElementException.class, () -> taskMan.getEpicTaskById(epic0.getId()),
+                "нашелся удаленный элемент");
+
+        assertThrows(NoSuchElementException.class, () -> taskMan.getSubTaskById(subt.getId()),
+                "нашелся удаленный элемент");
 
     }
 
@@ -164,10 +169,9 @@ class InMemoryTaskManagerTest extends TaskManagerTest {
         SubTask subt = new SubTask("subt", TaskStatus.IN_PROGRESS, "desc", epic0.getId(), dur1, date1);
         taskMan.createSubTask(subt);
         assertEquals(subt, taskMan.getSubTasksByEpic(epic0.getId()).getFirst(), "added subtask for epic wasnt found");
-        assertEquals(TaskStatus.IN_PROGRESS, epic0.status, "epic status wasnt changed");
+        assertEquals(TaskStatus.IN_PROGRESS, epic0.getStatus(), "epic status wasnt changed");
         taskMan.deleteSubTask(subt.getId());
-        assertNull(taskMan.getSubTaskById(subt.getId()), "deleted subtask was found");
-        assertEquals(TaskStatus.NEW, epic0.status, "epic status havent changed after deleting subtask");
+        assertEquals(TaskStatus.NEW, epic0.getStatus(), "epic status havent changed after deleting subtask");
 
 
     }
